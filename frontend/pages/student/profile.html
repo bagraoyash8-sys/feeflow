@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/student/dashboard.html" class="brand-logo">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-user-graduate"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Student Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">My Account</li>
+    <li class="sidebar-item">
+      <a href="/pages/student/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice"></i> <span>My Fees</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Payment History</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>My Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/profile.html" class="sidebar-link active">
+        <i class="fa-solid fa-user"></i> <span>My Profile</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Student Profile</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">S</div>
+      <div class="user-meta">
+        <div class="user-name">Student</div>
+        <div class="user-role">Student</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Student Profile & Security</h1>
+            <p>View your academic registration details and update password.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:900px;">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Academic Identity</h3></div>
+            <div class="card-body" style="font-size:0.875rem; line-height:2.2;">
+              <div><strong>Name:</strong> <span id="prof-name">—</span></div>
+              <div><strong>Roll Number:</strong> <code id="prof-roll">—</code></div>
+              <div><strong>Course:</strong> <span id="prof-course">—</span></div>
+              <div><strong>Department:</strong> <span id="prof-dept">—</span></div>
+              <div><strong>Academic Session:</strong> <span id="prof-year">—</span></div>
+              <div><strong>Email:</strong> <span id="prof-email">—</span></div>
+              <div><strong>Phone:</strong> <span id="prof-phone">—</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Change Password</h3></div>
+            <div class="card-body">
+              <form id="form-pwd">
+                <div class="form-group">
+                  <label class="form-label">Current Password *</label>
+                  <input type="password" id="cur-pass" class="form-control" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">New Password *</label>
+                  <input type="password" id="new-pass" class="form-control" minlength="6" required placeholder="Minimum 6 characters">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;"><i class="fa-solid fa-key"></i> Update Password</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.checkGuard('student')) return;
+
+      try {
+        const res = await API.get('/student/profile');
+        const s = res.data;
+        document.getElementById('prof-name').textContent = s.name;
+        document.getElementById('prof-roll').textContent = s.roll_number;
+        document.getElementById('prof-course').textContent = s.course_name || '—';
+        document.getElementById('prof-dept').textContent = s.department_name || '—';
+        document.getElementById('prof-year').textContent = s.academic_year_name || '—';
+        document.getElementById('prof-email').textContent = s.email;
+        document.getElementById('prof-phone').textContent = s.phone || '—';
+      } catch (err) {
+        UI.error('Failed to load profile');
+      }
+
+      document.getElementById('form-pwd').onsubmit = async (e) => {
+        e.preventDefault();
+        const currentPassword = document.getElementById('cur-pass').value;
+        const newPassword = document.getElementById('new-pass').value;
+
+        try {
+          await API.post('/auth/change-password', { currentPassword, newPassword });
+          UI.success('Password updated successfully!');
+          document.getElementById('form-pwd').reset();
+        } catch (err) {
+          UI.error(err.message || 'Password update failed');
+        }
+      };
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Fees - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/student/dashboard.html" class="brand-logo">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-user-graduate"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Student Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">My Account</li>
+    <li class="sidebar-item">
+      <a href="/pages/student/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-fees.html" class="sidebar-link active">
+        <i class="fa-solid fa-file-invoice"></i> <span>My Fees</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Payment History</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>My Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-user"></i> <span>My Profile</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">My Fee Breakdown</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">S</div>
+      <div class="user-meta">
+        <div class="user-name">Student</div>
+        <div class="user-role">Student</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Academic Fee Breakdown</h1>
+            <p>Itemized components, scholarships, and installment timeline.</p>
+          </div>
+          <div>
+            <a href="/pages/student/dashboard.html" class="btn btn-success"><i class="fa-solid fa-credit-card"></i> Pay Now</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card-header"><h3 class="card-title">Assigned Fee Template</h3></div>
+          <div class="card-body">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+              <div style="background:var(--bg); padding:1rem; border-radius:var(--radius-sm);"><div style="font-size:0.75rem; color:var(--text-muted);">GROSS TOTAL</div><div id="m-total" style="font-weight:700; font-size:1.2rem;">—</div></div>
+              <div style="background:var(--bg); padding:1rem; border-radius:var(--radius-sm);"><div style="font-size:0.75rem; color:var(--text-muted);">CONCESSIONS</div><div id="m-disc" style="font-weight:700; font-size:1.2rem; color:var(--success);">—</div></div>
+              <div style="background:var(--bg); padding:1rem; border-radius:var(--radius-sm);"><div style="font-size:0.75rem; color:var(--text-muted);">NET PAYABLE</div><div id="m-payable" style="font-weight:700; font-size:1.2rem;">—</div></div>
+              <div style="background:var(--bg); padding:1rem; border-radius:var(--radius-sm);"><div style="font-size:0.75rem; color:var(--text-muted);">TOTAL PAID</div><div id="m-paid" style="font-weight:700; font-size:1.2rem; color:var(--success);">—</div></div>
+              <div style="background:var(--bg); padding:1rem; border-radius:var(--radius-sm);"><div style="font-size:0.75rem; color:var(--text-muted);">BALANCE DUE</div><div id="m-pending" style="font-weight:700; font-size:1.2rem; color:var(--danger);">—</div></div>
+            </div>
+
+            <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Component Itemization</h4>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead><tr><th>Component</th><th>Amount (₹)</th></tr></thead>
+                <tbody id="comps-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Installment Milestones</h3></div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead><tr><th>Milestone #</th><th>Amount</th><th>Due Date</th><th>Paid Amount</th><th>Status</th></tr></thead>
+                <tbody id="student-inst-tbody"><tr><td colspan="5" style="text-align:center; padding:1.5rem;">Loading...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.checkGuard('student')) return;
+
+      try {
+        const res = await API.get('/student/fees');
+        const { fee, installments } = res.data;
+        if (!fee) return;
+
+        const discTotal = Number(fee.discount_amount || 0) + Number(fee.scholarship_amount || 0);
+        const pend = Math.max(0, Number(fee.final_payable) - Number(fee.paid_amount));
+
+        document.getElementById('m-total').textContent = UI.formatCurrency(fee.total_fee);
+        document.getElementById('m-disc').textContent = UI.formatCurrency(discTotal);
+        document.getElementById('m-payable').textContent = UI.formatCurrency(fee.final_payable);
+        document.getElementById('m-paid').textContent = UI.formatCurrency(fee.paid_amount);
+        document.getElementById('m-pending').textContent = UI.formatCurrency(pend);
+
+        document.getElementById('comps-tbody').innerHTML = `
+          <tr><td>Tuition Fee</td><td>${UI.formatCurrency(fee.tuition_fee)}</td></tr>
+          <tr><td>Admission Fee</td><td>${UI.formatCurrency(fee.admission_fee)}</td></tr>
+          <tr><td>Examination Fee</td><td>${UI.formatCurrency(fee.examination_fee)}</td></tr>
+          <tr><td>Library & Online Journals</td><td>${UI.formatCurrency(fee.library_fee)}</td></tr>
+          <tr><td>Laboratories & Computations</td><td>${UI.formatCurrency(fee.laboratory_fee)}</td></tr>
+          <tr><td>Sports & Amenities</td><td>${UI.formatCurrency(fee.sports_fee)}</td></tr>
+          <tr><td>Other Institutional Heads</td><td>${UI.formatCurrency(fee.other_fees)}</td></tr>
+        `;
+
+        const iTbody = document.getElementById('student-inst-tbody');
+        iTbody.innerHTML = installments.map(i => {
+          let badge = 'badge-secondary';
+          if (i.status === 'paid') badge = 'badge-success';
+          else if (i.status === 'partially_paid') badge = 'badge-warning';
+          else if (i.status === 'overdue') badge = 'badge-danger';
+          return `
+            <tr>
+              <td><strong>Milestone #${i.installment_number}</strong></td>
+              <td>${UI.formatCurrency(i.amount)}</td>
+              <td>${UI.formatDate(i.due_date)}</td>
+              <td>${UI.formatCurrency(i.paid_amount)}</td>
+              <td><span class="badge ${badge}">${i.status.replace('_', ' ')}</span></td>
+            </tr>
+          `;
+        }).join('') || '<tr><td colspan="5" style="text-align:center;">No installment schedule</td></tr>';
+      } catch (err) {
+        UI.error('Failed to load fee breakdown');
+      }
+    });
+  </script>
+</body>
+</html>

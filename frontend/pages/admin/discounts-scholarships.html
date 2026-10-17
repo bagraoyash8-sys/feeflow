@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concessions & Scholarships - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/admin/dashboard.html" class="brand-logo">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Admin Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">Overview</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="menu-heading">Student Operations</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/students.html" class="sidebar-link ">
+        <i class="fa-solid fa-users"></i> <span>All Students</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/add-student.html" class="sidebar-link ">
+        <i class="fa-solid fa-user-plus"></i> <span>Add Student</span>
+      </a>
+    </li>
+    <li class="menu-heading">Fee Management</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-structure.html" class="sidebar-link ">
+        <i class="fa-solid fa-layer-group"></i> <span>Fee Structures</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-collection.html" class="sidebar-link ">
+        <i class="fa-solid fa-cash-register"></i> <span>Fee Collection</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/pending-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Pending & Overdue</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/installments.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-days"></i> <span>Installments</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/discounts-scholarships.html" class="sidebar-link active">
+        <i class="fa-solid fa-tags"></i> <span>Concessions</span>
+      </a>
+    </li>
+    <li class="menu-heading">Finance & Audit</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-money-bill-transfer"></i> <span>Transactions</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/reports.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice-dollar"></i> <span>Reports & CSV</span>
+      </a>
+    </li>
+    <li class="menu-heading">Master Setup</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/courses-departments.html" class="sidebar-link ">
+        <i class="fa-solid fa-sitemap"></i> <span>Courses & Depts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/academic-years.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-check"></i> <span>Academic Years</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/admin-profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-id-badge"></i> <span>My Profile</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/settings.html" class="sidebar-link ">
+        <i class="fa-solid fa-sliders"></i> <span>Institute Settings</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Concessions & Scholarships</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-meta">
+        <div class="user-name">Administrator</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Scholarships & Fee Concessions</h1>
+            <p>Configure institutional grants, merit awards, and fee waiver categories.</p>
+          </div>
+          <div style="display:flex; gap:0.75rem;">
+            <button onclick="document.getElementById('modal-disc').showModal()" class="btn btn-outline"><i class="fa-solid fa-plus"></i> New Concession</button>
+            <button onclick="document.getElementById('modal-schol').showModal()" class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Scholarship</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+          <!-- Scholarships List -->
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-award" style="color:var(--primary); margin-right:0.5rem;"></i> Scholarships Catalog</h3></div>
+            <div class="card-body" style="padding:0;">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead><tr><th>Scholarship Name</th><th>Max Value</th><th>Action</th></tr></thead>
+                  <tbody id="schol-tbody"><tr><td colspan="3" style="text-align:center; padding:1.5rem;">Loading...</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discounts List -->
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-tags" style="color:var(--success); margin-right:0.5rem;"></i> Fee Discounts</h3></div>
+            <div class="card-body" style="padding:0;">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead><tr><th>Discount Name</th><th>Max Value</th><th>Action</th></tr></thead>
+                  <tbody id="disc-tbody"><tr><td colspan="3" style="text-align:center; padding:1.5rem;">Loading...</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Scholarship -->
+  <dialog id="modal-schol" class="modal-dialog">
+    <div class="modal-header"><h3 class="modal-title">Add Scholarship</h3><button onclick="document.getElementById('modal-schol').close()" class="modal-close">&times;</button></div>
+    <div class="modal-body">
+      <form id="form-schol">
+        <div class="form-group"><label class="form-label">Scholarship Name *</label><input type="text" id="sch-name" class="form-control" required placeholder="e.g. Merit Academic Award"></div>
+        <div class="form-group"><label class="form-label">Max Grant Amount (₹)</label><input type="number" id="sch-amt" class="form-control" value="10000" min="0"></div>
+        <div class="form-group"><label class="form-label">Eligibility / Description</label><textarea id="sch-desc" class="form-control" rows="2"></textarea></div>
+        <div class="modal-footer" style="padding: 1rem 0 0;"><button type="submit" class="btn btn-primary">Create Scholarship</button></div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal Discount -->
+  <dialog id="modal-disc" class="modal-dialog">
+    <div class="modal-header"><h3 class="modal-title">Add Concession Discount</h3><button onclick="document.getElementById('modal-disc').close()" class="modal-close">&times;</button></div>
+    <div class="modal-body">
+      <form id="form-disc">
+        <div class="form-group"><label class="form-label">Concession Name *</label><input type="text" id="dsc-name" class="form-control" required placeholder="e.g. Sibling Discount"></div>
+        <div class="form-group"><label class="form-label">Max Discount (₹)</label><input type="number" id="dsc-amt" class="form-control" value="5000" min="0"></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea id="dsc-desc" class="form-control" rows="2"></textarea></div>
+        <div class="modal-footer" style="padding: 1rem 0 0;"><button type="submit" class="btn btn-primary">Create Discount</button></div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    async function loadData() {
+      try {
+        const res = await API.get('/admin/discounts-scholarships');
+        const { discounts, scholarships } = res.data;
+
+        document.getElementById('schol-tbody').innerHTML = scholarships.map(s => `
+          <tr>
+            <td><strong>${s.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${s.description || ''}</span></td>
+            <td><strong>${UI.formatCurrency(s.max_amount)}</strong></td>
+            <td><button onclick="deleteSchol(${s.id})" class="btn-icon danger"><i class="fa-solid fa-trash"></i></button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="3" style="text-align:center;">None</td></tr>';
+
+        document.getElementById('disc-tbody').innerHTML = discounts.map(d => `
+          <tr>
+            <td><strong>${d.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${d.description || ''}</span></td>
+            <td><strong>${UI.formatCurrency(d.max_amount)}</strong></td>
+            <td><button onclick="deleteDisc(${d.id})" class="btn-icon danger"><i class="fa-solid fa-trash"></i></button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="3" style="text-align:center;">None</td></tr>';
+      } catch (err) {
+        UI.error('Failed to load items');
+      }
+    }
+
+    async function deleteSchol(id) {
+      if (!await UI.confirm('Delete Scholarship', 'Remove this scholarship entry?', 'Delete', true)) return;
+      await API.delete('/admin/scholarships/' + id);
+      UI.success('Deleted');
+      loadData();
+    }
+
+    async function deleteDisc(id) {
+      if (!await UI.confirm('Delete Discount', 'Remove this discount entry?', 'Delete', true)) return;
+      await API.delete('/admin/discounts/' + id);
+      UI.success('Deleted');
+      loadData();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.checkGuard('admin')) return;
+      loadData();
+
+      document.getElementById('form-schol').onsubmit = async (e) => {
+        e.preventDefault();
+        await API.post('/admin/scholarships', {
+          name: document.getElementById('sch-name').value,
+          max_amount: parseFloat(document.getElementById('sch-amt').value) || 0,
+          description: document.getElementById('sch-desc').value
+        });
+        document.getElementById('modal-schol').close();
+        UI.success('Scholarship added');
+        loadData();
+      };
+
+      document.getElementById('form-disc').onsubmit = async (e) => {
+        e.preventDefault();
+        await API.post('/admin/discounts', {
+          name: document.getElementById('dsc-name').value,
+          max_amount: parseFloat(document.getElementById('dsc-amt').value) || 0,
+          description: document.getElementById('dsc-desc').value
+        });
+        document.getElementById('modal-disc').close();
+        UI.success('Discount added');
+        loadData();
+      };
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment History - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/student/dashboard.html" class="brand-logo">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-user-graduate"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Student Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">My Account</li>
+    <li class="sidebar-item">
+      <a href="/pages/student/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice"></i> <span>My Fees</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/payment-history.html" class="sidebar-link active">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Payment History</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>My Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-user"></i> <span>My Profile</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">My Payment History</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">S</div>
+      <div class="user-meta">
+        <div class="user-name">Student</div>
+        <div class="user-role">Student</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Payment History</h1>
+            <p>Log of all transactions completed for your academic session.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Mode</th>
+                    <th>Transaction Reference</th>
+                    <th>Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="student-history-tbody">
+                  <tr><td colspan="5" style="text-align:center; padding:2rem;"><span class="spinner"></span> Loading history...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.checkGuard('student')) return;
+
+      try {
+        const res = await API.get('/student/payments');
+        const tbody = document.getElementById('student-history-tbody');
+        if (!res.data.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem;">No payments made yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = res.data.map(p => `
+          <tr>
+            <td>${UI.formatDate(p.payment_date)}</td>
+            <td><strong style="color:var(--success);">${UI.formatCurrency(p.amount)}</strong></td>
+            <td><span class="badge badge-primary">${p.payment_method.toUpperCase()}</span></td>
+            <td><code>${p.transaction_id || '—'}</code></td>
+            <td>
+              <a href="/pages/student/my-receipts.html?id=${p.receipt_id}" class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-receipt"></i> ${p.receipt_number || 'View Receipt'}
+              </a>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        UI.error('Failed to load payments');
+      }
+    });
+  </script>
+</body>
+</html>

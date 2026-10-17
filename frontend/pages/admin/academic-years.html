@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Years - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/admin/dashboard.html" class="brand-logo">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Admin Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">Overview</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="menu-heading">Student Operations</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/students.html" class="sidebar-link ">
+        <i class="fa-solid fa-users"></i> <span>All Students</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/add-student.html" class="sidebar-link ">
+        <i class="fa-solid fa-user-plus"></i> <span>Add Student</span>
+      </a>
+    </li>
+    <li class="menu-heading">Fee Management</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-structure.html" class="sidebar-link ">
+        <i class="fa-solid fa-layer-group"></i> <span>Fee Structures</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-collection.html" class="sidebar-link ">
+        <i class="fa-solid fa-cash-register"></i> <span>Fee Collection</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/pending-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Pending & Overdue</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/installments.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-days"></i> <span>Installments</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/discounts-scholarships.html" class="sidebar-link ">
+        <i class="fa-solid fa-tags"></i> <span>Concessions</span>
+      </a>
+    </li>
+    <li class="menu-heading">Finance & Audit</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-money-bill-transfer"></i> <span>Transactions</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/reports.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice-dollar"></i> <span>Reports & CSV</span>
+      </a>
+    </li>
+    <li class="menu-heading">Master Setup</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/courses-departments.html" class="sidebar-link ">
+        <i class="fa-solid fa-sitemap"></i> <span>Courses & Depts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/academic-years.html" class="sidebar-link active">
+        <i class="fa-solid fa-calendar-check"></i> <span>Academic Years</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/admin-profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-id-badge"></i> <span>My Profile</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/settings.html" class="sidebar-link ">
+        <i class="fa-solid fa-sliders"></i> <span>Institute Settings</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Academic Sessions</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-meta">
+        <div class="user-name">Administrator</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Academic Years</h1>
+            <p>Control college admission and billing academic terms.</p>
+          </div>
+          <div>
+            <button onclick="document.getElementById('modal-year').showModal()" class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Academic Year</button>
+          </div>
+        </div>
+
+        <div class="card" style="max-width: 800px;">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead><tr><th>Academic Session</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody id="years-tbody"><tr><td colspan="5" style="text-align:center; padding:1.5rem;">Loading...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="modal-year" class="modal-dialog">
+    <div class="modal-header"><h3 class="modal-title">New Academic Year</h3><button onclick="document.getElementById('modal-year').close()" class="modal-close">&times;</button></div>
+    <div class="modal-body">
+      <form id="form-year">
+        <div class="form-group"><label class="form-label">Session Name *</label><input type="text" id="ay-name" class="form-control" required placeholder="e.g. 2026-2027"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Start Date</label><input type="date" id="ay-start" class="form-control"></div>
+          <div class="form-group"><label class="form-label">End Date</label><input type="date" id="ay-end" class="form-control"></div>
+        </div>
+        <div class="form-group"><label><input type="checkbox" id="ay-current"> Mark as Active Current Session</label></div>
+        <div class="modal-footer" style="padding:1rem 0 0;"><button type="submit" class="btn btn-primary">Create Academic Year</button></div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    async function loadYears() {
+      try {
+        const res = await API.get('/admin/academic-years');
+        document.getElementById('years-tbody').innerHTML = res.data.map(y => `
+          <tr>
+            <td><strong>${y.name}</strong></td>
+            <td>${UI.formatDate(y.start_date)}</td>
+            <td>${UI.formatDate(y.end_date)}</td>
+            <td>${y.is_current ? '<span class="badge badge-success">Current Session</span>' : '<span class="badge badge-secondary">Archive</span>'}</td>
+            <td>
+              ${!y.is_current ? `<button onclick="setCurrent(${y.id})" class="btn btn-outline btn-sm"><i class="fa-solid fa-check"></i> Set Active</button>` : '<em>Active</em>'}
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;">None</td></tr>';
+      } catch (err) {
+        UI.error('Failed to load academic sessions');
+      }
+    }
+
+    async function setCurrent(id) {
+      await API.put(`/admin/academic-years/${id}/set-current`, {});
+      UI.success('Active academic year updated');
+      loadYears();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.checkGuard('admin')) return;
+      loadYears();
+
+      document.getElementById('form-year').onsubmit = async (e) => {
+        e.preventDefault();
+        await API.post('/admin/academic-years', {
+          name: document.getElementById('ay-name').value,
+          start_date: document.getElementById('ay-start').value,
+          end_date: document.getElementById('ay-end').value,
+          is_current: document.getElementById('ay-current').checked
+        });
+        document.getElementById('modal-year').close();
+        UI.success('Academic session added');
+        loadYears();
+      };
+    });
+  </script>
+</body>
+</html>

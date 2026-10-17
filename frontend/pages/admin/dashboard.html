@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/admin/dashboard.html" class="brand-logo">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Admin Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">Overview</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/dashboard.html" class="sidebar-link active">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="menu-heading">Student Operations</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/students.html" class="sidebar-link ">
+        <i class="fa-solid fa-users"></i> <span>All Students</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/add-student.html" class="sidebar-link ">
+        <i class="fa-solid fa-user-plus"></i> <span>Add Student</span>
+      </a>
+    </li>
+    <li class="menu-heading">Fee Management</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-structure.html" class="sidebar-link ">
+        <i class="fa-solid fa-layer-group"></i> <span>Fee Structures</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-collection.html" class="sidebar-link ">
+        <i class="fa-solid fa-cash-register"></i> <span>Fee Collection</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/pending-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Pending & Overdue</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/installments.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-days"></i> <span>Installments</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/discounts-scholarships.html" class="sidebar-link ">
+        <i class="fa-solid fa-tags"></i> <span>Concessions</span>
+      </a>
+    </li>
+    <li class="menu-heading">Finance & Audit</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-money-bill-transfer"></i> <span>Transactions</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/reports.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice-dollar"></i> <span>Reports & CSV</span>
+      </a>
+    </li>
+    <li class="menu-heading">Master Setup</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/courses-departments.html" class="sidebar-link ">
+        <i class="fa-solid fa-sitemap"></i> <span>Courses & Depts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/academic-years.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-check"></i> <span>Academic Years</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/admin-profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-id-badge"></i> <span>My Profile</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/settings.html" class="sidebar-link ">
+        <i class="fa-solid fa-sliders"></i> <span>Institute Settings</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Executive Dashboard</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-meta">
+        <div class="user-name">Administrator</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Overview & Fee Metrics</h1>
+            <p>Real-time campus fee reconciliation and collection performance.</p>
+          </div>
+          <div>
+            <a href="/pages/admin/fee-collection.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Collect Fee</a>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Total Students</div>
+              <div class="kpi-value" id="kpi-students">—</div>
+              <div class="kpi-subtext">Active enrolled</div>
+            </div>
+            <div class="kpi-icon primary"><i class="fa-solid fa-user-graduate"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Total Assigned Fees</div>
+              <div class="kpi-value" id="kpi-total-fees">—</div>
+              <div class="kpi-subtext">Net payable sum</div>
+            </div>
+            <div class="kpi-icon primary"><i class="fa-solid fa-layer-group"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Total Collected</div>
+              <div class="kpi-value" id="kpi-collected" style="color: var(--success);">—</div>
+              <div class="kpi-subtext">Realized to date</div>
+            </div>
+            <div class="kpi-icon success"><i class="fa-solid fa-money-bill-wave"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Total Pending</div>
+              <div class="kpi-value" id="kpi-pending" style="color: var(--danger);">—</div>
+              <div class="kpi-subtext">Outstanding dues</div>
+            </div>
+            <div class="kpi-icon danger"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Overdue Installments</div>
+              <div class="kpi-value" id="kpi-overdue" style="color: #b91c1c;">—</div>
+              <div class="kpi-subtext">Past milestone date</div>
+            </div>
+            <div class="kpi-icon danger" style="background:#fee2e2; color:#b91c1c;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Today's Collection</div>
+              <div class="kpi-value" id="kpi-today" style="color: var(--primary);">—</div>
+              <div class="kpi-subtext">Recorded today</div>
+            </div>
+            <div class="kpi-icon primary" style="background:#dbeafe;"><i class="fa-solid fa-calendar-day"></i></div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><i class="fa-solid fa-chart-line" style="color: var(--primary); margin-right: 0.5rem;"></i> Monthly Collection Trend</span>
+            </div>
+            <div class="chart-container"><canvas id="chart-monthly"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><i class="fa-solid fa-chart-pie" style="color: var(--success); margin-right: 0.5rem;"></i> Paid vs Pending Proportion</span>
+            </div>
+            <div class="chart-container"><canvas id="chart-paid-pending"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><i class="fa-solid fa-building-columns" style="color: var(--warning); margin-right: 0.5rem;"></i> Department-wise Collection</span>
+            </div>
+            <div class="chart-container"><canvas id="chart-department"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><i class="fa-solid fa-list-check" style="color: #8b5cf6; margin-right: 0.5rem;"></i> Fee Status Distribution</span>
+            </div>
+            <div class="chart-container"><canvas id="chart-status"></canvas></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-receipt" style="color: var(--primary); margin-right: 0.5rem;"></i> Recent Fee Transactions</h3>
+            <a href="/pages/admin/payment-history.html" class="btn btn-outline btn-sm">View All Transactions</a>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Roll Number</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Method</th>
+                    <th>Transaction ID</th>
+                    <th>Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-payments-tbody">
+                  <tr><td colspan="7" style="text-align:center; padding: 2rem;"><span class="spinner"></span> Loading transactions...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.checkGuard('admin')) return;
+
+      try {
+        const res = await API.get('/admin/dashboard');
+        const data = res.data;
+
+        document.getElementById('kpi-students').textContent = data.cards.totalStudents;
+        document.getElementById('kpi-total-fees').textContent = UI.formatCurrency(data.cards.totalFees);
+        document.getElementById('kpi-collected').textContent = UI.formatCurrency(data.cards.totalCollected);
+        document.getElementById('kpi-pending').textContent = UI.formatCurrency(data.cards.totalPending);
+        document.getElementById('kpi-overdue').textContent = UI.formatCurrency(data.cards.overdueFees);
+        document.getElementById('kpi-today').textContent = UI.formatCurrency(data.cards.todayCollection);
+
+        new Chart(document.getElementById('chart-monthly'), {
+          type: 'line',
+          data: {
+            labels: data.charts.monthlyCollection.map(m => m.month),
+            datasets: [{
+              label: 'Collection (₹)',
+              data: data.charts.monthlyCollection.map(m => Number(m.amount)),
+              borderColor: '#2563eb',
+              backgroundColor: 'rgba(37, 99, 235, 0.1)',
+              tension: 0.35,
+              fill: true
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        new Chart(document.getElementById('chart-paid-pending'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Collected', 'Pending'],
+            datasets: [{
+              data: [data.charts.paidVsPending.paid, data.charts.paidVsPending.pending],
+              backgroundColor: ['#10b981', '#ef4444']
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        new Chart(document.getElementById('chart-department'), {
+          type: 'bar',
+          data: {
+            labels: data.charts.departmentCollection.map(d => d.department),
+            datasets: [{
+              label: 'Collected (₹)',
+              data: data.charts.departmentCollection.map(d => Number(d.amount)),
+              backgroundColor: '#3b82f6'
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        new Chart(document.getElementById('chart-status'), {
+          type: 'pie',
+          data: {
+            labels: data.charts.statusDistribution.map(s => s.status),
+            datasets: [{
+              data: data.charts.statusDistribution.map(s => s.count),
+              backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#6b7280']
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        const tbody = document.getElementById('recent-payments-tbody');
+        if (!data.recentTransactions.length) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 2rem;">No fee transactions found yet.</td></tr>';
+        } else {
+          tbody.innerHTML = data.recentTransactions.map(t => `
+            <tr>
+              <td><strong>${t.student_name}</strong></td>
+              <td><code>${t.roll_number}</code></td>
+              <td><strong style="color:var(--success);">${UI.formatCurrency(t.amount)}</strong></td>
+              <td>${UI.formatDate(t.payment_date)}</td>
+              <td><span class="badge badge-primary">${t.payment_method.toUpperCase()}</span></td>
+              <td><code>${t.transaction_id || 'N/A'}</code></td>
+              <td>
+                <a href="/pages/admin/receipts.html?id=${t.receipt_id}" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-receipt"></i> ${t.receipt_number || 'View'}
+                </a>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        UI.error(err.message || 'Failed to load dashboard data');
+      }
+    });
+  </script>
+</body>
+</html>

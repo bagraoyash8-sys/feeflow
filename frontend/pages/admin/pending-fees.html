@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Fees - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/admin/dashboard.html" class="brand-logo">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Admin Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">Overview</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="menu-heading">Student Operations</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/students.html" class="sidebar-link ">
+        <i class="fa-solid fa-users"></i> <span>All Students</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/add-student.html" class="sidebar-link ">
+        <i class="fa-solid fa-user-plus"></i> <span>Add Student</span>
+      </a>
+    </li>
+    <li class="menu-heading">Fee Management</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-structure.html" class="sidebar-link ">
+        <i class="fa-solid fa-layer-group"></i> <span>Fee Structures</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/fee-collection.html" class="sidebar-link ">
+        <i class="fa-solid fa-cash-register"></i> <span>Fee Collection</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/pending-fees.html" class="sidebar-link active">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Pending & Overdue</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/installments.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-days"></i> <span>Installments</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/discounts-scholarships.html" class="sidebar-link ">
+        <i class="fa-solid fa-tags"></i> <span>Concessions</span>
+      </a>
+    </li>
+    <li class="menu-heading">Finance & Audit</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-money-bill-transfer"></i> <span>Transactions</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/reports.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice-dollar"></i> <span>Reports & CSV</span>
+      </a>
+    </li>
+    <li class="menu-heading">Master Setup</li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/courses-departments.html" class="sidebar-link ">
+        <i class="fa-solid fa-sitemap"></i> <span>Courses & Depts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/academic-years.html" class="sidebar-link ">
+        <i class="fa-solid fa-calendar-check"></i> <span>Academic Years</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/admin-profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-id-badge"></i> <span>My Profile</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/admin/settings.html" class="sidebar-link ">
+        <i class="fa-solid fa-sliders"></i> <span>Institute Settings</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Pending & Overdue Ledger</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-meta">
+        <div class="user-name">Administrator</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>Fee Defaulters & Outstanding Balances</h1>
+            <p>Track students with pending fees and overdue installment milestones.</p>
+          </div>
+          <div>
+            <button id="btn-export-csv" class="btn btn-outline"><i class="fa-solid fa-file-csv"></i> Export Defaulters CSV</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Roll Number</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Total Payable</th>
+                    <th>Amount Paid</th>
+                    <th>Outstanding Due</th>
+                    <th>Contact Phone</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="pending-tbody">
+                  <tr><td colspan="8" style="text-align:center; padding:2rem;"><span class="spinner"></span> Loading pending dues...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    let pendingList = [];
+
+    async function loadPendingFees() {
+      try {
+        const res = await API.get('/admin/reports/pending');
+        pendingList = res.data;
+        const tbody = document.getElementById('pending-tbody');
+        if (!pendingList.length) {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:2rem;">No pending fee defaulters! All accounts reconciled.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = pendingList.map(p => `
+          <tr>
+            <td><strong>${p.roll_number}</strong></td>
+            <td><strong>${p.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${p.email}</span></td>
+            <td>${p.course_name || '—'}</td>
+            <td>${UI.formatCurrency(p.final_payable)}</td>
+            <td><span style="color:var(--success);">${UI.formatCurrency(p.paid_amount)}</span></td>
+            <td><strong style="color:var(--danger); font-size:1rem;">${UI.formatCurrency(p.pending_amount)}</strong></td>
+            <td>${p.phone || '—'}</td>
+            <td>
+              <a href="/pages/admin/fee-collection.html?student_id=${p.id}" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Collect
+              </a>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        UI.error('Failed to load pending fees');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.checkGuard('admin')) return;
+      loadPendingFees();
+
+      document.getElementById('btn-export-csv').addEventListener('click', () => {
+        if (!pendingList.length) return UI.warning('No records to export');
+        const headers = ['Roll Number', 'Name', 'Email', 'Course', 'Payable', 'Paid', 'Pending Due', 'Phone'];
+        const rows = pendingList.map(p => [p.roll_number, p.name, p.email, p.course_name, p.final_payable, p.paid_amount, p.pending_amount, p.phone]);
+        UI.exportDataToCSV(headers, rows, 'feeflow_pending_dues.csv');
+      });
+    });
+  </script>
+</body>
+</html>

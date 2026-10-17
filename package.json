@@ -1,0 +1,24 @@
+{
+  "name": "feeflow",
+  "version": "1.0.0",
+  "description": "FeeFlow - Smart Fees. Simple Management. College Fee Management System",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "cd backend && npm install",
+    "postinstall": "cd backend && npm install",
+    "seed": "node backend/database/seed.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "feeflow",
+    "fee-management",
+    "college-fees",
+    "express",
+    "mysql"
+  ],
+  "author": "FeeFlow",
+  "license": "ISC"
+}

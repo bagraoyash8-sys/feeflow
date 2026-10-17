@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  
+<nav class="public-nav">
+  <a href="/index.html" class="brand-logo">
+    <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div><span>FeeFlow</span><span class="brand-tagline">Smart Fees. Simple Management.</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/index.html" class="nav-link ">Home</a></li>
+    <li><a href="/about.html" class="nav-link ">About</a></li>
+    <li><a href="/features.html" class="nav-link ">Features</a></li>
+    <li><a href="/contact.html" class="nav-link active">Contact</a></li>
+    <li><a href="/login.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a></li>
+  </ul>
+</nav>
+  <section class="hero-section" style="padding: 3.5rem 2rem 2.5rem;">
+    <h1 class="hero-title" style="font-size: 2.3rem;">Contact FeeFlow Desk</h1>
+    <p class="hero-desc">Reach out to campus administration and fee accounting support.</p>
+  </section>
+  <section style="padding: 2rem 2rem 4rem; max-width: 900px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Send an Inquiry</h3></div>
+        <div class="card-body">
+          <form id="contact-form" onsubmit="event.preventDefault(); UI.success('Message received! Our team will contact you.'); this.reset();">
+            <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-control" required placeholder="Your name"></div>
+            <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" required placeholder="you@example.com"></div>
+            <div class="form-group"><label class="form-label">Message</label><textarea class="form-control" rows="3" required placeholder="Inquiry details"></textarea></div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Campus Information</h3></div>
+        <div class="card-body" style="font-size: 0.875rem; line-height: 1.8;">
+          <p><strong><i class="fa-solid fa-building-columns" style="color: var(--primary);"></i> FeeFlow Institute of Technology</strong></p>
+          <p><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> 402 Knowledge Boulevard, Tech Campus, Mumbai - 400076</p>
+          <p><i class="fa-solid fa-phone" style="color: var(--primary);"></i> +91 98765 43210</p>
+          <p><i class="fa-solid fa-envelope" style="color: var(--primary);"></i> accounts@feeflow.edu</p>
+          <div style="margin-top: 1.5rem; background: var(--bg); padding: 0.85rem; border-radius: var(--radius-sm); font-size: 0.8rem;">
+            <i class="fa-solid fa-clock"></i> <strong>Hours:</strong> Mon – Sat, 9:00 AM – 5:00 PM IST
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<footer style="background: #0f172a; color: #94a3b8; padding: 2.5rem 2rem 1.5rem; text-align: center;">
+  <p style="font-weight: 600; color: white; margin-bottom: 0.35rem;">FeeFlow - Smart Fees. Simple Management.</p>
+  <p style="font-size: 0.8rem; color: #64748b;">Academic Project Presentation Edition &bull; College Fee Automation</p>
+</footer>
+  <script src="/js/ui.js"></script>
+</body>
+</html>

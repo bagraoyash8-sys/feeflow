@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Receipts - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/student/dashboard.html" class="brand-logo">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-user-graduate"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Student Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">My Account</li>
+    <li class="sidebar-item">
+      <a href="/pages/student/dashboard.html" class="sidebar-link ">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice"></i> <span>My Fees</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Payment History</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-receipts.html" class="sidebar-link active">
+        <i class="fa-solid fa-receipt"></i> <span>My Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-user"></i> <span>My Profile</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Official Receipts Archive</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">S</div>
+      <div class="user-meta">
+        <div class="user-name">Student</div>
+        <div class="user-role">Student</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1>My Fee Receipts</h1>
+            <p>Download and print verified fee receipts for tax and bursar submissions.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Receipt Number</th>
+                    <th>Payment Date</th>
+                    <th>Amount Paid</th>
+                    <th>Remaining Balance</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="student-receipts-tbody">
+                  <tr><td colspan="5" style="text-align:center; padding:2rem;"><span class="spinner"></span> Loading receipts...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="modal-receipt" class="modal-dialog" style="max-width:760px;">
+    <div class="modal-header no-print">
+      <h3 class="modal-title">Receipt Voucher</h3>
+      <div style="display:flex; gap:0.5rem; align-items:center;">
+        <button onclick="window.print()" class="btn btn-primary btn-sm"><i class="fa-solid fa-print"></i> Print / PDF</button>
+        <button onclick="document.getElementById('modal-receipt').close()" class="modal-close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" style="padding:1.5rem;">
+      <div class="receipt-paper" id="student-receipt-content"></div>
+    </div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    async function loadReceipts() {
+      try {
+        const res = await API.get('/student/receipts');
+        const tbody = document.getElementById('student-receipts-tbody');
+        if (!res.data.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem;">No receipts generated yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = res.data.map(r => `
+          <tr>
+            <td><strong>${r.receipt_number}</strong></td>
+            <td>${UI.formatDate(r.payment_date)}</td>
+            <td><strong style="color:var(--success);">${UI.formatCurrency(r.amount_paid)}</strong></td>
+            <td>${UI.formatCurrency(r.remaining_balance)}</td>
+            <td>
+              <button onclick="viewStudentReceipt(${r.id})" class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-eye"></i> View & Print
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        UI.error('Failed to load receipts');
+      }
+    }
+
+    async function viewStudentReceipt(id) {
+      try {
+        const res = await API.get(`/student/receipts/${id}`);
+        const { receipt, institute } = res.data;
+
+        document.getElementById('student-receipt-content').innerHTML = `
+          <div class="receipt-header">
+            <div style="font-size:2rem; color:var(--primary); margin-bottom:0.35rem;"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="receipt-college-title">${institute.institute_name || 'FeeFlow Institute of Technology'}</div>
+            <div style="font-size:0.8rem; color:#64748b;">${institute.address || 'Knowledge Boulevard, Tech Campus, Mumbai'}</div>
+            <div style="font-size:0.75rem; color:#64748b;">Code: ${institute.code || 'FIT-2026'} &bull; Phone: ${institute.phone || '+91 98765 43210'} &bull; Email: ${institute.email || 'accounts@feeflow.edu'}</div>
+            <div style="display:inline-block; margin-top:0.75rem; padding:0.25rem 0.75rem; background:#eff6ff; color:#1e40af; border-radius:999px; font-weight:700; font-size:0.8rem;">
+              STUDENT FEE PAYMENT RECEIPT
+            </div>
+          </div>
+
+          <div class="receipt-meta-grid">
+            <div>
+              <div><strong>Receipt No:</strong> ${receipt.receipt_number}</div>
+              <div><strong>Payment Date:</strong> ${UI.formatDate(receipt.payment_date)}</div>
+              <div><strong>Payment Mode:</strong> ${receipt.payment_method.toUpperCase()}</div>
+              <div><strong>Transaction ID:</strong> <code>${receipt.transaction_id || 'N/A'}</code></div>
+            </div>
+            <div>
+              <div><strong>Student Name:</strong> ${receipt.student_name}</div>
+              <div><strong>Roll Number:</strong> <code>${receipt.roll_number}</code></div>
+              <div><strong>Course:</strong> ${receipt.course_name || '—'}</div>
+              <div><strong>Academic Session:</strong> ${receipt.academic_year_name || 'Current'}</div>
+            </div>
+          </div>
+
+          <table class="receipt-table">
+            <thead>
+              <tr><th>Fee Head</th><th style="text-align:right;">Amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tuition Fee</td><td style="text-align:right;">${UI.formatCurrency(receipt.tuition_fee)}</td></tr>
+              <tr><td>Admission & Registration</td><td style="text-align:right;">${UI.formatCurrency(receipt.admission_fee)}</td></tr>
+              <tr><td>Examination Fee</td><td style="text-align:right;">${UI.formatCurrency(receipt.examination_fee)}</td></tr>
+              <tr><td>Library & Lab Amenities</td><td style="text-align:right;">${UI.formatCurrency(Number(receipt.library_fee) + Number(receipt.laboratory_fee))}</td></tr>
+              <tr><td>Other Heads</td><td style="text-align:right;">${UI.formatCurrency(Number(receipt.sports_fee) + Number(receipt.other_fees))}</td></tr>
+              ${Number(receipt.discount_amount || 0) + Number(receipt.scholarship_amount || 0) > 0 ? `
+                <tr style="color:#059669;">
+                  <td>Concessions / Scholarships</td>
+                  <td style="text-align:right;">- ${UI.formatCurrency(Number(receipt.discount_amount || 0) + Number(receipt.scholarship_amount || 0))}</td>
+                </tr>
+              ` : ''}
+              <tr style="font-weight:700; background:#f8fafc;">
+                <td>Total Net Payable</td>
+                <td style="text-align:right;">${UI.formatCurrency(receipt.final_payable)}</td>
+              </tr>
+              <tr style="font-weight:700; background:#f0fdf4; color:#15803d; font-size:1rem;">
+                <td>Amount Paid In This Voucher</td>
+                <td style="text-align:right;">${UI.formatCurrency(receipt.amount_paid)}</td>
+              </tr>
+              <tr style="font-weight:700; background:#fef2f2; color:#b91c1c;">
+                <td>Remaining Balance Due</td>
+                <td style="text-align:right;">${UI.formatCurrency(receipt.remaining_balance)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="receipt-footer">
+            <div style="font-size:0.75rem; color:#94a3b8;">Printed on: ${new Date().toLocaleString()}</div>
+            <div class="receipt-signature-box">Authorized Signatory</div>
+          </div>
+        `;
+
+        document.getElementById('modal-receipt').showModal();
+      } catch (err) {
+        UI.error('Failed to load receipt');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.checkGuard('student')) return;
+      loadReceipts();
+
+      const params = new URLSearchParams(window.location.search);
+      const rid = params.get('id');
+      if (rid) viewStudentReceipt(rid);
+    });
+  </script>
+</body>
+</html>

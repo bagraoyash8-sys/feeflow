@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - FeeFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/pages/student/dashboard.html" class="brand-logo">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-user-graduate"></i></div>
+      <div><span>FeeFlow</span><span class="brand-tagline">Student Portal</span></div>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li class="menu-heading">My Account</li>
+    <li class="sidebar-item">
+      <a href="/pages/student/dashboard.html" class="sidebar-link active">
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-fees.html" class="sidebar-link ">
+        <i class="fa-solid fa-file-invoice"></i> <span>My Fees</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/payment-history.html" class="sidebar-link ">
+        <i class="fa-solid fa-clock-rotate-left"></i> <span>Payment History</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/my-receipts.html" class="sidebar-link ">
+        <i class="fa-solid fa-receipt"></i> <span>My Receipts</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="/pages/student/profile.html" class="sidebar-link ">
+        <i class="fa-solid fa-user"></i> <span>My Profile</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="width: 100%; border-color: #fca5a5; color: #dc2626;">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+    <main class="main-wrapper">
+      
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button"><i class="fa-solid fa-bars"></i></button>
+    <h2 class="topbar-title">Student Fee Dashboard</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="user-badge">
+      <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">S</div>
+      <div class="user-meta">
+        <div class="user-name">Student</div>
+        <div class="user-role">Student</div>
+      </div>
+    </div>
+    <button onclick="Auth.logout()" class="btn btn-outline btn-sm" title="Sign out">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+</header>
+
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 id="welcome-msg">Welcome to Student Portal</h1>
+            <p id="student-roll-badge">Academic Session Overview</p>
+          </div>
+          <div>
+            <button id="btn-pay-modal" class="btn btn-success" style="padding:0.65rem 1.75rem;"><i class="fa-solid fa-credit-card"></i> Pay Fee Now</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Total Course Fee</div>
+              <div class="kpi-value" id="kpi-total">—</div>
+              <div class="kpi-subtext">Net payable sum</div>
+            </div>
+            <div class="kpi-icon primary"><i class="fa-solid fa-graduation-cap"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Amount Paid</div>
+              <div class="kpi-value" id="kpi-paid" style="color:var(--success);">—</div>
+              <div class="kpi-subtext">Reconciled to date</div>
+            </div>
+            <div class="kpi-icon success"><i class="fa-solid fa-circle-check"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Pending Balance</div>
+              <div class="kpi-value" id="kpi-pending" style="color:var(--danger);">—</div>
+              <div class="kpi-subtext">Remaining dues</div>
+            </div>
+            <div class="kpi-icon danger"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-title">Next Due Milestone</div>
+              <div class="kpi-value" id="kpi-duedate" style="font-size:1.25rem;">—</div>
+              <div class="kpi-subtext" id="kpi-dueamt">Next installment</div>
+            </div>
+            <div class="kpi-icon warning"><i class="fa-solid fa-calendar-day"></i></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left" style="color:var(--primary); margin-right:0.5rem;"></i> My Recent Payments</h3>
+            <a href="/pages/student/payment-history.html" class="btn btn-outline btn-sm">Full Ledger</a>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Mode</th>
+                    <th>Transaction ID</th>
+                    <th>Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="student-recent-tbody">
+                  <tr><td colspan="5" style="text-align:center; padding:2rem;"><span class="spinner"></span> Loading transactions...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="modal-pay" class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title"><i class="fa-solid fa-shield-halved" style="color:var(--success); margin-right:0.4rem;"></i> Demo Online Payment</h3>
+      <button onclick="document.getElementById('modal-pay').close()" class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-sm); padding:0.75rem 1rem; font-size:0.8rem; color:#1e40af; margin-bottom:1.25rem;">
+        <i class="fa-solid fa-circle-info"></i> <strong>Safe College Demo Flow:</strong> Simulates instant online fee payment and automatically generates an official receipt.
+      </div>
+      <form id="form-demo-pay">
+        <div class="form-group">
+          <label class="form-label">Payment Amount (₹) *</label>
+          <input type="number" id="pay-amt" class="form-control" min="1" step="0.01" required>
+          <div class="form-text" id="max-pay-hint">Maximum payable: ₹0</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Mode *</label>
+          <select id="pay-method" class="form-select" required>
+            <option value="upi">UPI (Instant QR / VPA)</option>
+            <option value="card">Debit / Credit Card</option>
+            <option value="net_banking">Net Banking Portal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dummy Transaction ID</label>
+          <input type="text" id="pay-txnid" class="form-control" placeholder="Auto-generated if left empty">
+        </div>
+        <div class="modal-footer" style="padding:1rem 0 0;">
+          <button type="button" onclick="document.getElementById('modal-pay').close()" class="btn btn-outline">Cancel</button>
+          <button type="submit" id="btn-pay-submit" class="btn btn-success" style="padding:0.65rem 1.75rem;">
+            <i class="fa-solid fa-lock"></i> Authorize Demo Payment
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    let studentPendingDue = 0;
+
+    async function loadStudentDashboard() {
+      try {
+        const res = await API.get('/student/dashboard');
+        const { summary, student, recentPayments } = res.data;
+
+        studentPendingDue = Number(summary.pendingAmount);
+
+        document.getElementById('welcome-msg').textContent = 'Hello, ' + student.name;
+        document.getElementById('student-roll-badge').textContent = `Roll: ${student.roll_number} • ${summary.paymentStatus}`;
+
+        document.getElementById('kpi-total').textContent = UI.formatCurrency(summary.totalFee);
+        document.getElementById('kpi-paid').textContent = UI.formatCurrency(summary.amountPaid);
+        document.getElementById('kpi-pending').textContent = UI.formatCurrency(summary.pendingAmount);
+        document.getElementById('kpi-duedate').textContent = summary.nextDueDate ? UI.formatDate(summary.nextDueDate) : 'All Cleared';
+        document.getElementById('kpi-dueamt').textContent = summary.nextDueAmount > 0 ? `Due: ${UI.formatCurrency(summary.nextDueAmount)}` : 'No upcoming dues';
+
+        document.getElementById('pay-amt').value = studentPendingDue;
+        document.getElementById('max-pay-hint').textContent = `Outstanding pending dues: ${UI.formatCurrency(studentPendingDue)}`;
+
+        const btnPay = document.getElementById('btn-pay-modal');
+        if (studentPendingDue <= 0) {
+          btnPay.disabled = true;
+          btnPay.innerHTML = '<i class="fa-solid fa-check-double"></i> All Fees Paid';
+          btnPay.className = 'btn btn-outline';
+        }
+
+        const tbody = document.getElementById('student-recent-tbody');
+        if (!recentPayments.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem;">No past transactions found.</td></tr>';
+        } else {
+          tbody.innerHTML = recentPayments.map(p => `
+            <tr>
+              <td>${UI.formatDate(p.payment_date)}</td>
+              <td><strong style="color:var(--success);">${UI.formatCurrency(p.amount)}</strong></td>
+              <td><span class="badge badge-primary">${p.payment_method.toUpperCase()}</span></td>
+              <td><code>${p.transaction_id || '—'}</code></td>
+              <td>
+                <a href="/pages/student/my-receipts.html?id=${p.receipt_id}" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-receipt"></i> ${p.receipt_number || 'View'}
+                </a>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        UI.error(err.message || 'Failed to load dashboard');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.checkGuard('student')) return;
+      loadStudentDashboard();
+
+      document.getElementById('btn-pay-modal').addEventListener('click', () => {
+        document.getElementById('modal-pay').showModal();
+      });
+
+      document.getElementById('form-demo-pay').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const amt = parseFloat(document.getElementById('pay-amt').value);
+        const method = document.getElementById('pay-method').value;
+        const txnid = document.getElementById('pay-txnid').value;
+
+        if (isNaN(amt) || amt <= 0) return UI.error('Please enter a valid amount');
+        if (amt > studentPendingDue + 0.01) return UI.error('Amount exceeds your total pending dues');
+
+        const btn = document.getElementById('btn-pay-submit');
+        try {
+          btn.disabled = true;
+          btn.innerHTML = '<span class="spinner"></span> Confirming...';
+
+          const res = await API.post('/student/payments', {
+            amount: amt,
+            payment_method: method,
+            transaction_id: txnid || `DEMO_TXN_${Date.now()}`
+          });
+
+          UI.success(res.message || 'Payment confirmed!');
+          document.getElementById('modal-pay').close();
+          setTimeout(() => {
+            window.location.href = `/pages/student/my-receipts.html?id=${res.data.receiptId}`;
+          }, 1000);
+        } catch (err) {
+          UI.error(err.message || 'Payment failed');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Authorize Demo Payment';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
