@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fee Management System - Micro Project Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14pt;
+      line-height: 1.6;
+      color: #000;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      page-break-after: always;
+      position: relative;
+      min-height: 980px;
+    }
+    .page:last-child {
+      page-break-after: auto;
+    }
+    .border-page {
+      border: 3px double #000;
+      padding: 25px;
+      min-height: 940px;
+      box-sizing: border-box;
+    }
+    .text-center { text-align: center; }
+    .text-justify { text-align: justify; }
+    .text-right { text-align: right; }
+    .bold { font-weight: bold; }
+    .uppercase { text-transform: uppercase; }
+
+    h1, h2, h3, h4 {
+      margin: 8px 0;
+      font-weight: bold;
+      text-align: center;
+    }
+    h1 { font-size: 20pt; }
+    h2 { font-size: 17pt; }
+    h3 { font-size: 15pt; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 13pt;
+    }
+    th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    
+    .meta-box {
+      margin: 15px 0;
+      font-size: 13pt;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .screenshot-box {
+      width: 100%;
+      height: 410px;
+      border: 2px dashed #666;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      color: #777;
+      background: #fafafa;
+      box-sizing: border-box;
+      padding: 15px;
+    }
+    .screenshot-box span.title {
+      font-size: 14pt;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    .screenshot-box span.sub {
+      font-size: 11pt;
+      color: #888;
+    }
+
+    .signature-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 80px;
+      padding: 0 10px;
+      font-weight: bold;
+      font-size: 13pt;
+    }
+    .signature-col {
+      text-align: center;
+      min-width: 150px;
+    }
+
+    code, pre {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 10.5pt;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 10px;
+      display: block;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.3;
+    }
+
+    .print-btn-bar {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    @media print {
+      .print-btn-bar { display: none; }
+      body { background: transparent; }
+      .page { min-height: 100%; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn-bar" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+<!-- ================= PAGE 1: COVER PAGE ================= -->
+<div class="page">
+  <div class="border-page text-center">
+    
+    <div style="font-size: 14pt; font-weight: bold; margin-bottom: 5px;">
+      SHIVAJIRAO S. JONDHLE EDUCATIONAL GROUP'S
+    </div>
+    <div style="font-size: 13pt; margin-bottom: 15px;">
+      VIGHNAHARATA TRUST
+    </div>
+
+    <div style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 6px 0; margin: 10px 0; font-size: 12pt; display: flex; justify-content: space-between;">
+      <span><strong>Subject & Code:</strong> SET (315332)</span>
+      <span><strong>Academic Year:</strong> 2026-2027</span>
+    </div>
+    <div style="border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 20px; font-size: 12pt; display: flex; justify-content: space-between;">
+      <span><strong>Course Name:</strong> TYIF</span>
+      <span><strong>Semester:</strong> FIFTH</span>
+    </div>
+
+    <div style="margin: 25px 0 10px 0;">
+      <p style="font-size: 14pt; font-weight: bold; margin: 0;">A Study On :-</p>
+      <h1 style="margin: 8px 0; font-size: 22pt; text-decoration: underline;">FEE MANAGEMENT SYSTEM</h1>
+      <h2 style="margin: 5px 0; font-size: 16pt;">(FeeFlow — Smart Fees. Simple Management.)</h2>
+      <h3 style="margin-top: 15px; font-size: 15pt;">MICRO PROJECT REPORT</h3>
+    </div>
+
+    <div style="margin: 25px 0;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 10%;">Sr.</th>
+            <th style="width: 15%;">Roll no.</th>
+            <th style="width: 35%;">Name of Student</th>
+            <th style="width: 20%;">Enrollment no.</th>
+            <th style="width: 20%;">Seat no.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">29</td>
+            <td class="bold">Yash Bagrao</td>
+            <td style="text-align: center;">24112090659</td>
+            <td style="text-align: center;">133970</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin: 30px 0 15px 0;">
+      <p style="margin: 0; font-size: 14pt;">Under the Guidance of :</p>
+      <h3 style="margin: 5px 0 15px 0; font-size: 16pt;">Ms. HARSHALA NAIK</h3>
+      <p style="margin: 0; font-size: 13pt;">In</p>
+      <p style="margin: 5px 0 15px 0; font-size: 13pt; line-height: 1.4;">
+        Third Year of Diploma Program in Information Technology Engineering<br>
+        of Maharashtra State Board of Technical Education, Mumbai.
+      </p>
+      <p style="margin: 0; font-size: 13pt; font-weight: bold;">AT</p>
+      <h2 style="margin: 8px 0; font-size: 16pt;">SHIVAJIRAO S. JONDHLE POLYTECHNIC, ASANGAON</h2>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= PAGE 2: CERTIFICATE ================= -->
+<div class="page">
+  <div class="border-page">
+    <div class="text-center" style="margin-bottom: 25px;">
+      <h2 style="margin: 0; font-size: 17pt;">MAHARASHTRA STATE BOARD OF TECHNICAL EDUCATION</h2>
+      <h3 style="margin: 5px 0 15px 0; font-size: 15pt;">MUMBAI</h3>
+      <h1 style="font-size: 20pt; text-decoration: underline; margin-top: 15px;">CERTIFICATE</h1>
+    </div>
+
+    <p class="text-justify" style="font-size: 14pt; line-height: 2; margin-top: 35px;">
+      This is to certify that <strong>Mr. Yash Bagrao</strong>, Roll No. <strong>29</strong> of Fifth Semester of 
+      <strong>INFORMATION TECHNOLOGY ENGINEERING</strong> Diploma Program in Engineering and Technology at 
+      <strong>Shivajirao S. Jondhale Polytechnic, Asangaon</strong> has completed the Micro Project satisfactorily in subject 
+      <strong>SET (315332)</strong> in the academic year <strong>2026-2027</strong> as per the MSBTE prescribed curriculum of ‘K’ scheme.
+    </p>
+
+    <div style="margin-top: 40px; font-size: 13pt; line-height: 1.8;">
+      <div style="display: flex; justify-content: space-between;">
+        <span><strong>Place:</strong> Asangaon</span>
+        <span><strong>Enrollment No:</strong> 24112090659</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+        <span><strong>Date:</strong> &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;/ 2026</span>
+        <span><strong>Exam Seat No:</strong> 133970</span>
+      </div>
+    </div>
+
+    <div class="signature-row" style="margin-top: 90px;">
+      <div class="signature-col">
+        <br><br>
+        ______________________<br>
+        <strong>Subject Teacher</strong>
+      </div>
+      <div class="signature-col">
+        <br><br>
+        ______________________<br>
+        <strong>HEAD OF DEPARTMENT</strong>
+      </div>
+      <div class="signature-col">
+        <br><br>
+        ______________________<br>
+        <strong>PRINCIPAL</strong>
+      </div>
+    </div>
+
+    <div style="margin-top: 50px; text-align: center; font-size: 11pt; color: #555;">
+      [ SEAL OF INSTITUTE ]
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE 3: INDEX ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 25px;">INDEX</h1>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%;">Sr. No.</th>
+          <th style="width: 70%;">Title Name</th>
+          <th style="width: 15%;">Page No.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center;">1.</td>
+          <td>Abstract</td>
+          <td style="text-align: center;">1</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">2.</td>
+          <td>Acknowledgement</td>
+          <td style="text-align: center;">2</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">3.</td>
+          <td>Introduction</td>
+          <td style="text-align: center;">3</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">4.</td>
+          <td>System Requirements</td>
+          <td style="text-align: center;">4</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">5.</td>
+          <td>Source Code</td>
+          <td style="text-align: center;">5 - 6</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">6.</td>
+          <td>Screenshots (Blank Sections for Print/Paste)</td>
+          <td style="text-align: center;">7 - 8</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">7.</td>
+          <td>Conclusion & References</td>
+          <td style="text-align: center;">9</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================= PAGE 4: ABSTRACT ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 25px;">ABSTRACT</h1>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      The <strong>Fee Management System (FeeFlow)</strong> aims to automate and streamline the fee collection, student accounting, receipt generation, and financial reporting workflows of educational institutions. In traditional academic environments, tracking student fee dues, managing multi-tier installments, calculating scholarships/discounts, and generating paper-based receipts are labor-intensive tasks prone to human calculation errors, misplaced receipts, and delayed reconciliation.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      The FeeFlow application provides an intuitive web platform with strict Role-Based Access Control (RBAC) separating <strong>Administrative Officers</strong> and <strong>Students</strong>. College administrators can define program-specific fee structures broken down into components such as Tuition, Admission, Examination, Library, Laboratory, Sports, and Miscellaneous charges. The system facilitates immediate counter fee collection with automated receipt generation, balance adjustment, and installment monitoring. Defaulter lists and overdue payments are tracked in real time.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      Students can securely authenticate to view their itemized fee structure, ledger history, upcoming installment deadlines, and download official PDF/print receipts. Furthermore, a safe online payment workflow enables students to clear outstanding dues from any device. FeeFlow significantly reduces manual paperwork, prevents ledger discrepancies, accelerates fee collection, and enhances financial transparency for polytechnic and collegiate institutions.
+    </p>
+  </div>
+</div>
+
+<!-- ================= PAGE 5: ACKNOWLEDGEMENT ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 25px;">ACKNOWLEDGEMENT</h1>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.9;">
+      It gives me great pleasure to submit this micro project report on <strong>“Fee Management System (FeeFlow)”</strong>. I express my sincere thanks to my project guide <strong>Mrs. Harshala Naik</strong>, Department of Information Technology, for the constant support, technical guidance, and valuable advice given to us throughout the course of this report. She has been a constant source of inspiration and mentorship.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.9;">
+      I would like to express my honest gratitude to <strong>Ms. Harshala Naik</strong>, Head of the Department of Information Technology, for providing the necessary facilities, valuable suggestions, and constant encouragement throughout this work. I also take this opportunity to acknowledge the contribution of all faculty and lab staff members of the department for their assistance and cooperation during the development of our project.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.9;">
+      I am also very much thankful to our respected Principal <strong>Mr. Sandesh Bhadane</strong>, who has been a constant source of inspiration and support to successfully complete this academic endeavor.
+    </p>
+
+    <div style="margin-top: 60px; text-align: right; font-size: 14pt;">
+      <strong>Yash Bagrao</strong><br>
+      Roll No. 29<br>
+      TYIF (Semester - V)
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE 6: INTRODUCTION ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 20px;">INTRODUCTION</h1>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.7;">
+      The Fee Management System is a specialized transaction processing database application developed to handle financial records and payment workflows within polytechnics and universities. Educational institutions process thousands of fee payments every semester across diverse academic programs, quota reservations, concessions, and installment schemes. Managing these operations using paper ledgers or standalone spreadsheets leads to data redundancy, security vulnerabilities, and delay in audits.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.7;">
+      FeeFlow provides a centralized, secure relational database management solution coupled with a modern responsive web client. The system maintains transaction integrity using atomic database queries, ensuring that every payment immediately updates student balance sheets, records payment mode metadata, and generates an auditable numbered receipt.
+    </p>
+
+    <h3 style="text-align: left; margin: 15px 0 10px 0;">Key Objectives of the System:</h3>
+    <ul style="font-size: 13.5pt; line-height: 1.8;">
+      <li><strong>Manage Student Profiles:</strong> Add, view, edit, search, and filter student records based on course, department, and academic year.</li>
+      <li><strong>Configurable Fee Templates:</strong> Setup head-wise fee structures (Tuition, Library, Exam, Sports, etc.) per course.</li>
+      <li><strong>Fee Collection & Cashiering:</strong> Record payments via Cash, UPI, Card, or Net Banking with instant receipt creation.</li>
+      <li><strong>Defaulter & Installment Tracking:</strong> Identify students with pending or overdue installments and send automated notices.</li>
+      <li><strong>Student Self-Service Portal:</strong> Provide students 24/7 access to view dues, payment ledger, and digital receipts.</li>
+      <li><strong>Audit & Analytics Reports:</strong> Generate daily, monthly, departmental, and payment-method reports with 1-click CSV export.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= PAGE 7: SYSTEM REQUIREMENTS ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 25px;">SYSTEM REQUIREMENTS</h1>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      The main purpose of this document is to specify the software and hardware requirements of the <strong>Fee Management System (FeeFlow)</strong>. The system is designed following a lightweight, decoupled client-server architecture ensuring high speed, cross-device responsiveness, and reliable data persistence.
+    </p>
+
+    <h2 style="text-align: left; font-size: 16pt; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">
+      Software Requirements & Technologies Used:
+    </h2>
+    
+    <table style="margin-top: 15px;">
+      <thead>
+        <tr>
+          <th style="width: 35%;">Component / Layer</th>
+          <th style="width: 65%;">Technology / Tool Specification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Front End</strong></td>
+          <td>HTML5, CSS3, Vanilla JavaScript, Google Fonts (Poppins), Font Awesome Icons</td>
+        </tr>
+        <tr>
+          <td><strong>Back End & Server</strong></td>
+          <td>Node.js runtime environment, Express.js web application framework</td>
+        </tr>
+        <tr>
+          <td><strong>Database Management</strong></td>
+          <td>MySQL Relational Database Server with <code>mysql2/promise</code> pool</td>
+        </tr>
+        <tr>
+          <td><strong>Authentication & Security</strong></td>
+          <td>JSON Web Tokens (JWT) for session control, <code>bcryptjs</code> for password hashing</td>
+        </tr>
+        <tr>
+          <td><strong>Development Environment</strong></td>
+          <td>Visual Studio Code (VS Code)</td>
+        </tr>
+        <tr>
+          <td><strong>Local Server Stack</strong></td>
+          <td>XAMPP Server / Standalone MySQL daemon</td>
+        </tr>
+        <tr>
+          <td><strong>Operating System</strong></td>
+          <td>Windows 10 / Windows 11 / Linux compatible</td>
+        </tr>
+        <tr>
+          <td><strong>Deployment Environment</strong></td>
+          <td>GitHub repository version control, Render Cloud Web Service, Cloudflare Tunnel</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="text-align: left; font-size: 16pt; margin-top: 25px; border-bottom: 1px solid #000; padding-bottom: 5px;">
+      Hardware Requirements:
+    </h2>
+    <ul style="font-size: 13.5pt; line-height: 1.8;">
+      <li><strong>Processor:</strong> Intel Core i3 / AMD Ryzen 3 or higher</li>
+      <li><strong>RAM:</strong> 4 GB minimum (8 GB recommended)</li>
+      <li><strong>Hard Disk Storage:</strong> 500 MB free storage for database and assets</li>
+      <li><strong>Network:</strong> Internet connection or Local Area Network (LAN) for multi-device access</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= PAGE 8: SOURCE CODE (PAGE 1) ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 15px;">SOURCE CODE</h1>
+    <h3 style="text-align: left; margin: 5px 0;">1. Frontend Landing Page (<code>index.html</code> excerpt):</h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;FeeFlow - Smart Fees. Simple Management.&lt;/title&gt;
+  &lt;link rel="stylesheet" href="css/style.css"&gt;
+  &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Top Navigation Bar --&gt;
+  &lt;header class="navbar"&gt;
+    &lt;div class="container nav-content"&gt;
+      &lt;a href="index.html" class="logo"&gt;
+        &lt;i class="fa-solid fa-graduation-cap"&gt;&lt;/i&gt; Fee&lt;span&gt;Flow&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;nav class="nav-links"&gt;
+        &lt;a href="index.html" class="active"&gt;Home&lt;/a&gt;
+        &lt;a href="about.html"&gt;About&lt;/a&gt;
+        &lt;a href="features.html"&gt;Features&lt;/a&gt;
+        &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+      &lt;/nav&gt;
+      &lt;div class="nav-actions"&gt;
+        &lt;a href="login.html" class="btn btn-primary"&gt;&lt;i class="fa-solid fa-right-to-bracket"&gt;&lt;/i&gt; Portal Login&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Hero Section --&gt;
+  &lt;section class="hero"&gt;
+    &lt;div class="container hero-grid"&gt;
+      &lt;div class="hero-text"&gt;
+        &lt;span class="badge"&gt;&lt;i class="fa-solid fa-shield-halved"&gt;&lt;/i&gt; Next-Gen Campus Billing&lt;/span&gt;
+        &lt;h1&gt;Fee Management Made &lt;span class="text-gradient"&gt;Simple &amp; Transparent&lt;/span&gt;&lt;/h1&gt;
+        &lt;p&gt;FeeFlow empowers polytechnics and colleges to manage student fee structures, collect online &amp; counter payments, issue instant GST/college receipts, and automate defaulter tracking.&lt;/p&gt;
+        &lt;div class="hero-cta"&gt;
+          &lt;a href="login.html" class="btn btn-primary btn-lg"&gt;Access Portal &lt;i class="fa-solid fa-arrow-right"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href="features.html" class="btn btn-outline btn-lg"&gt;Explore Features&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </div>
+</div>
+
+<!-- ================= PAGE 9: SOURCE CODE (PAGE 2) ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 15px;">SOURCE CODE (CONTD.)</h1>
+    <h3 style="text-align: left; margin: 5px 0;">2. Backend Express Server & Routing (<code>server.js</code>):</h3>
+    <pre><code>const express = require('express');
+const cors = require('cors');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+const authRoutes = require('./routes/auth.routes');
+const adminRoutes = require('./routes/admin.routes');
+const studentRoutes = require('./routes/student.routes');
+const settingsRoutes = require('./routes/settings.routes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve Frontend static assets
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Friendly Page Route Aliases
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../frontend/login.html')));
+app.get('/about', (req, res) => res.sendFile(path.join(__dirname, '../frontend/about.html')));
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/student', studentRoutes);
+app.use('/api/settings', settingsRoutes);
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: 'FeeFlow API is running smoothly', timestamp: new Date() });
+});
+
+// Centralized JSON Error Handler
+app.use((err, req, res, next) => {
+  console.error('Application Error:', err.message);
+  res.status(err.status || 500).json({ success: false, error: err.message || 'Server error' });
+});
+
+app.listen(PORT, () => {
+  console.log(`FeeFlow Server active on port ${PORT}`);
+});</code></pre>
+  </div>
+</div>
+
+<!-- ================= PAGE 10: SCREENSHOTS PAGE 1 (BLANK FOR PRINT / PASTE) ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 10px;">SCREENSHOTS (PAGE 1)</h1>
+    <p class="text-center" style="font-size: 12pt; color: #555; margin-bottom: 20px;">
+      [ 2 Pages blank on screenshot section for pasting or printing project screenshots ]
+    </p>
+
+    <!-- Screenshot Box 1 -->
+    <div class="screenshot-box">
+      <span class="title">Screenshot 1: Home / Landing Page (FeeFlow Portal)</span>
+      <span class="sub">Attach or paste screenshot of the public landing page with Hero section & features</span>
+    </div>
+
+    <!-- Screenshot Box 2 -->
+    <div class="screenshot-box">
+      <span class="title">Screenshot 2: Dual Role Login Page (Admin / Student Tabs)</span>
+      <span class="sub">Attach or paste screenshot of login.html showing Admin Email & Student Roll No login tabs</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE 11: SCREENSHOTS PAGE 2 (BLANK FOR PRINT / PASTE) ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 10px;">SCREENSHOTS (PAGE 2)</h1>
+    <p class="text-center" style="font-size: 12pt; color: #555; margin-bottom: 20px;">
+      [ 2 Pages blank on screenshot section for pasting or printing project screenshots ]
+    </p>
+
+    <!-- Screenshot Box 3 -->
+    <div class="screenshot-box">
+      <span class="title">Screenshot 3: Admin Dashboard (KPI Cards & Collection Analytics)</span>
+      <span class="sub">Attach or paste screenshot of dashboard.html with summary cards and Chart.js graphs</span>
+    </div>
+
+    <!-- Screenshot Box 4 -->
+    <div class="screenshot-box">
+      <span class="title">Screenshot 4: Fee Collection Counter & Generated Official Receipt</span>
+      <span class="sub">Attach or paste screenshot of fee-collection.html showing counter payment & printable receipt</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE 12: CONCLUSION & REFERENCES ================= -->
+<div class="page">
+  <div class="border-page">
+    <h1 style="text-decoration: underline; margin-bottom: 20px;">CONCLUSION & REFERENCES</h1>
+    
+    <h2 style="text-align: left; font-size: 16pt; margin-top: 10px;">CONCLUSION</h2>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      The <strong>Fee Management System (FeeFlow)</strong> project successfully demonstrates a modern, efficient, and reliable approach to managing collegiate fee collection and accounting operations. The application replaces error-prone manual register systems with an automated database driven solution that enables instant fee calculations, customized quota scholarships, counter collection, and instant receipt issuance.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      By implementing Role-Based Access Control using JSON Web Tokens (JWT), administrators have complete control over academic fee structures, defaulter tracking, and financial audit reports, while students enjoy a transparent, 24/7 self-service portal to verify their dues and download receipts.
+    </p>
+    <p class="text-justify" style="font-size: 14pt; line-height: 1.8;">
+      Through this micro-project, we gained hands-on expertise in full-stack web development methodologies, client-server communication using RESTful APIs, relational database normalization with MySQL, asynchronous JavaScript, and cloud deployment pipelines. FeeFlow provides an impactful real-world utility that streamlines campus administration and elevates the student experience.
+    </p>
+
+    <h2 style="text-align: left; font-size: 16pt; margin-top: 35px;">REFERENCES</h2>
+    <ul style="font-size: 13.5pt; line-height: 1.9;">
+      <li><strong>W3Schools Online Web Tutorials:</strong> <a href="https://www.w3schools.com" style="color: #000;">https://www.w3schools.com</a></li>
+      <li><strong>Mozilla Developer Network (MDN Web Docs):</strong> <a href="https://developer.mozilla.org" style="color: #000;">https://developer.mozilla.org</a></li>
+      <li><strong>GeeksforGeeks Computer Science Portal:</strong> <a href="https://www.geeksforgeeks.org" style="color: #000;">https://www.geeksforgeeks.org</a></li>
+      <li><strong>Node.js Official Documentation:</strong> <a href="https://nodejs.org" style="color: #000;">https://nodejs.org</a></li>
+      <li><strong>Express.js Fast, Unopinionated Web Framework:</strong> <a href="https://expressjs.com" style="color: #000;">https://expressjs.com</a></li>
+      <li><strong>MySQL 8.0 Reference Manual:</strong> <a href="https://dev.mysql.com/doc" style="color: #000;">https://dev.mysql.com/doc</a></li>
+      <li><strong>Stack Overflow Developer Community:</strong> <a href="https://stackoverflow.com" style="color: #000;">https://stackoverflow.com</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
